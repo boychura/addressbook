@@ -9,7 +9,7 @@ namespace addressbook
         [TestMethod]
         public void TestMethod1()
         {
-            Console.WriteLine("Hello");
+            Console.WriteLine("Hello everyone");
         }
     }
 }
