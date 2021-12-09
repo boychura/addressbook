@@ -42,24 +42,19 @@ namespace addressbook
         [Test]
         public void ContactCreatingTK()
         {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             GoToMain();
             Login();
             SubmitLogin();
             InitContactCreate();
-            UserBio user = new UserBio("ser", "boy")
+            UserBio user = new UserBio("ser", "boy");
             FillContactForm(user);
             SumbitContactCreating();
-            CheckContactCreating();
+            GoToMainCheckContactCreation();
             LogOut();
         }
 
-        private void SumbitContactCreating()
-        {
-            driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
-            driver.FindElement(By.Id("nav")).Click();
-        }
-
-        private void CheckContactCreating()
+        private void GoToMainCheckContactCreation()
         {
             driver.FindElement(By.LinkText("home")).Click();
         }
@@ -67,6 +62,11 @@ namespace addressbook
         private void LogOut()
         {
             driver.FindElement(By.LinkText("Logout")).Click();
+        }
+
+        private void SumbitContactCreating()
+        {
+            driver.FindElement(By.Name("submit")).Click();
         }
 
         private void FillContactForm(UserBio user)
@@ -86,15 +86,15 @@ namespace addressbook
 
         private void SubmitLogin()
         {
-            driver.FindElement(By.Id("LoginForm")).Submit();
+            driver.FindElement(By.XPath("//*[@id='LoginForm']/input[3]")).Click();
         }
 
         private void Login()
         {
-            driver.FindElement(By.Id("LoginForm")).Click();
             driver.FindElement(By.Name("user")).Click();
             driver.FindElement(By.Name("user")).Clear();
             driver.FindElement(By.Name("user")).SendKeys("admin");
+            driver.FindElement(By.Name("pass")).Click();
             driver.FindElement(By.Name("pass")).Clear();
             driver.FindElement(By.Name("pass")).SendKeys("secret");
         }
