@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace addressbook
 {
-    internal class UserBio
+    public class UserBio
     {
         private string name;
         private string surname;

@@ -65,13 +65,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountData.cs" />
-    <Compile Include="UserBio.cs" />
-    <Compile Include="GroupData.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ContactModificationTests.cs" />
+    <Compile Include="tests\ContactRemovalTests.cs" />
+    <Compile Include="model\AccountData.cs" />
+    <Compile Include="appmanager\ApplicationManager.cs" />
+    <Compile Include="appmanager\BaseHelper.cs" />
+    <Compile Include="appmanager\ContactHelper.cs" />
+    <Compile Include="appmanager\GroupHelper.cs" />
+    <Compile Include="appmanager\LoginHelper.cs" />
+    <Compile Include="appmanager\NavigationHelper.cs" />
+    <Compile Include="tests\TestBase.cs" />
+    <Compile Include="model\UserBio.cs" />
+    <Compile Include="model\GroupData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GroupCreatingTest.cs" />
-    <Compile Include="ContactCreatingTest.cs" />
+    <Compile Include="tests\GroupCreatingTests.cs" />
+    <Compile Include="tests\ContactCreatingTests.cs" />
+    <Compile Include="tests\GroupModificationTests.cs" />
+    <Compile Include="tests\GroupRemovalTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
