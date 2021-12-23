@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace addressbook
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupRemovalTests : AuthTestBase
     {
         [Test]
         public void GroupRemovalTestCase()
         {
-            applicationManager.Groups.Remove(1);
+            app.Groups.Remove(1);
         }
     }
 }

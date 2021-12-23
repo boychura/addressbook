@@ -21,12 +21,9 @@ namespace addressbook
 
         public ContactHelper FillContactForm(UserBio user)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(user.Name);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(user.Surname);
+            Type(By.Name("firstname"), user.Name);
+            Type(By.Name("lastname"), user.Surname);
+
             return this;
         }
 
@@ -42,12 +39,26 @@ namespace addressbook
         }
         public ContactHelper SelectContact(int index)
         {
+            if (!IsContactExist())
+            {
+                SumbitContactCreating();
+                driver.FindElement(By.Name("firstname")).SendKeys("name_test");
+                driver.FindElement(By.Name("lastname")).SendKeys("surname_test");
+                SumbitContactCreating();
+
+            }
             driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + index + "]/input")).Click();
             return this;
         }
+
+        private bool IsContactExist()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
         public ContactHelper InitContactRemove()
         {
-            driver.FindElement(By.XPath("//*[@id='content']/form[2]/div[2]/input")).Click();
+            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/div[2]/input")).Click();
             return this;
         }
         public ContactHelper AcceptContactRemove()

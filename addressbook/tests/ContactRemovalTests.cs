@@ -6,16 +6,15 @@ using NUnit.Framework;
 namespace addressbook
 {
     [TestFixture]
-    public class ContactRemovalTests : TestBase
+    public class ContactRemovalTests : AuthTestBase
     {
         [Test]
         public void ContactRemovalTestCase()
         {
-            applicationManager.Contact.SelectContact(1);
-            applicationManager.Contact.InitContactRemove();
-            applicationManager.Contact.AcceptContactRemove();
-            applicationManager.Navigator.GoBackToMain();
-            applicationManager.Auth.LogOut();
+            app.Contact.SelectContact(1);
+            app.Contact.InitContactRemove();
+            app.Contact.AcceptContactRemove();
+            app.Navigator.GoBackToMain();
         }
     }
 }

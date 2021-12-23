@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,17 +54,15 @@ namespace addressbook
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            InitGroupCreation();
+            Type(By.Name("group_name"), group.Name);
+            Type(By.Name("group_header"), group.Header);
+            Type(By.Name("group_footer"), group.Footer);
+            SubmitGroupCreation();
+
             return this;
         }
+
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
@@ -80,9 +78,21 @@ namespace addressbook
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            if (!IsGroupPresent())
+            {
+                driver.FindElement(By.Name("group_name")).SendKeys("group_name_test");
+                driver.FindElement(By.Name("group_name")).SendKeys("group_header_test");
+                driver.FindElement(By.Name("group_name")).SendKeys("group_footer_test");
+            }
+            driver.FindElement(By.XPath("/html/body/div/div[4]/form/span[" + index + "]/input")).Click();
             return this;
         }
+
+        private bool IsGroupPresent()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();

@@ -6,16 +6,16 @@ using NUnit.Framework;
 namespace addressbook
 {
     [TestFixture]
-    public class ContactCreatingTests : AuthTestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
-        public void ContactCreatingTK()
+        public void ContactModificationTestCase()
         {
-            UserBio user = new UserBio("ser", "boy");
+            UserBio user = new UserBio("ser_modificated", "boy_modificated");
 
-            app.Contact.InitContactCreate();
+            app.Contact.EditContact(1);
             app.Contact.FillContactForm(user);
-            app.Contact.SumbitContactCreating();
+            app.Contact.SumbitContactEditing();
             app.Navigator.GoBackToMain();
         }
     }

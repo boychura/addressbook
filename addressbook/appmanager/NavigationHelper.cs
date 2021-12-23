@@ -19,6 +19,11 @@ namespace addressbook
         public void
             GoToGroupPage()
         {
+            if (driver.Url == baseURL + " /group.php"
+                && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
         public void GoBackToMain()
@@ -27,6 +32,10 @@ namespace addressbook
         }
         public void GoToMainPage()
         {
+            if (driver.Url == baseURL)
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL);
         }
     }
