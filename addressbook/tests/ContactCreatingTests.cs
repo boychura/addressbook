@@ -11,11 +11,9 @@ namespace addressbook
         [Test]
         public void ContactCreatingTK()
         {
-            UserBio user = new UserBio("ser", "boy");
+            UserBio user = new UserBio("ser1", "boy1");
 
-            app.Contact.InitContactCreate();
-            app.Contact.FillContactForm(user);
-            app.Contact.SumbitContactCreating();
+            app.Contact.CreateContact(user);
             app.Navigator.GoBackToMain();
         }
     }

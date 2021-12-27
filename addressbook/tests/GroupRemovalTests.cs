@@ -11,7 +11,11 @@ namespace addressbook
         [Test]
         public void GroupRemovalTestCase()
         {
-            app.Groups.Remove(1);
+            GroupData group = new GroupData("table_name_deleted");
+            group.Header = "table_header_deleted";
+            group.Footer = "table_footer_deleted";
+
+            app.Groups.Remove(1, group);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace addressbook
         [Test]
         public void ContactRemovalTestCase()
         {
-            app.Contact.SelectContact(1);
-            app.Contact.InitContactRemove();
-            app.Contact.AcceptContactRemove();
+            UserBio user = new UserBio("deleted_name", "deleted_surname");
+
+            app.Contact.RemoveContact(1, user);
             app.Navigator.GoBackToMain();
         }
     }

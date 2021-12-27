@@ -13,9 +13,7 @@ namespace addressbook
         {
             UserBio user = new UserBio("ser_modificated", "boy_modificated");
 
-            app.Contact.EditContact(1);
-            app.Contact.FillContactForm(user);
-            app.Contact.SumbitContactEditing();
+            app.Contact.ModifyContact(1, user);
             app.Navigator.GoBackToMain();
         }
     }

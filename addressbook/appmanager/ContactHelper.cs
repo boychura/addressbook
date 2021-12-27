@@ -19,6 +19,41 @@ namespace addressbook
             return this;
         }
 
+        public ContactHelper RemoveContact(int v, UserBio user)
+        {
+            if (!IsContactExist(v))
+            {
+                CreateContact(user);
+            }
+            SelectContact(v);
+            InitContactRemove();
+            AcceptContactRemove();
+
+            return this;
+        }
+
+        public ContactHelper CreateContact(UserBio user)
+        {
+            InitContactCreate();
+            FillContactForm(user);
+            SumbitContactCreating();
+
+            return this;
+        }
+
+        public ContactHelper ModifyContact(int v, UserBio user)
+        {
+            if (!IsContactExist(v))
+            {
+                CreateContact(user);
+            }
+            EditContact(v);
+            FillContactForm(user);
+            SumbitContactEditing();
+
+            return this;
+        }
+
         public ContactHelper FillContactForm(UserBio user)
         {
             Type(By.Name("firstname"), user.Name);
@@ -39,23 +74,15 @@ namespace addressbook
         }
         public ContactHelper SelectContact(int index)
         {
-            if (!IsContactExist())
-            {
-                SumbitContactCreating();
-                driver.FindElement(By.Name("firstname")).SendKeys("name_test");
-                driver.FindElement(By.Name("lastname")).SendKeys("surname_test");
-                SumbitContactCreating();
-
-            }
             driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + index + "]/input")).Click();
             return this;
         }
 
-        private bool IsContactExist()
+        private bool IsContactExist(int index)
         {
-            return IsElementPresent(By.Name("selected[]"));
+            return IsElementPresent(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + index + "]/input"));
         }
-
+        
         public ContactHelper InitContactRemove()
         {
             driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/div[2]/input")).Click();

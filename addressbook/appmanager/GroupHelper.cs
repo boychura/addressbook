@@ -28,6 +28,10 @@ namespace addressbook
         public GroupHelper Modify(int v, GroupData group)
         {
             manager.Navigator.GoToGroupPage();
+            if (!IsGroupPresent(v))
+            {
+                Create(group);
+            }
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(group);
@@ -37,9 +41,13 @@ namespace addressbook
             return this;
         }
 
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove(int p, GroupData group)
         {
             manager.Navigator.GoToGroupPage();
+            if (!IsGroupPresent(p))
+            {
+                Create(group);
+            }
             SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -76,19 +84,13 @@ namespace addressbook
 
         public GroupHelper SelectGroup(int index)
         {
-            if (!IsGroupPresent())
-            {
-                driver.FindElement(By.Name("group_name")).SendKeys("group_name_test");
-                driver.FindElement(By.Name("group_name")).SendKeys("group_header_test");
-                driver.FindElement(By.Name("group_name")).SendKeys("group_footer_test");
-            }
             driver.FindElement(By.XPath("/html/body/div/div[4]/form/span[" + index + "]/input")).Click();
             return this;
         }
 
-        private bool IsGroupPresent()
+        private bool IsGroupPresent(int index)
         {
-            return IsElementPresent(By.Name("selected[]"));
+            return IsElementPresent(By.XPath("/html/body/div/div[4]/form/span[" + index + "]/input"));
         }
 
         public GroupHelper RemoveGroup()
