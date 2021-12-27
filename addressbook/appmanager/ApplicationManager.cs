@@ -25,6 +25,7 @@ namespace addressbook
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             baseURL = "http://localhost/addressbook";
 
             loginHelper = new LoginHelper(this);

@@ -54,11 +54,9 @@ namespace addressbook
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            InitGroupCreation();
             Type(By.Name("group_name"), group.Name);
             Type(By.Name("group_header"), group.Header);
             Type(By.Name("group_footer"), group.Footer);
-            SubmitGroupCreation();
 
             return this;
         }
