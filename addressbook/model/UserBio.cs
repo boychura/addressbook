@@ -8,19 +8,16 @@ namespace addressbook
     //указываем что клас наследует IEquatable,IComparable и его можно сравнивать  с другими объектами UserBio
     public class UserBio : IEquatable<UserBio>, IComparable<UserBio>
     {
-
-        //объявление полей класса
-        private string name;
-        private string surname;
-
-
         //конструктор класса UserBio
         public UserBio(string name, string surname)
         {
-            this.name = name;
-            this.surname = surname;
+            Name = name;
+            Surname = surname;
         }
-
+        public UserBio(string name)
+        {
+            Name = name;
+        }
 
         //standart method 'Equals' IEquatable
         //сравнение элементов обьекта GroupData(список груп до создания и список груп после создания)
@@ -59,35 +56,17 @@ namespace addressbook
         //standart method, returns string value UserBio
         public override string ToString()
         {
-            return "name=" + Name + "surname=" + Surname;
+            return "name=" + Name + " surname=" + Surname;
         }
 
 
         //аксесор для поля имени
-        public string Name 
-        {
-            get
-            {
-                return name;
-            }
-            set 
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }//default accessor
 
 
         //аксесор для поля фамилии
-        public string Surname 
-        {
-            get
-            {
-                return surname;
-            }
-            set
-            {
-                surname = value;
-            }
-        }
+        public string Surname { get; set; }
+
+        public string Id { get; set; }
     }
 }

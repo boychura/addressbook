@@ -16,16 +16,28 @@ namespace addressbook
             group.Header = "table_header_modified";
             group.Footer = "table_footer_modified";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
             app.Groups.StartCheckGroups(0, group);
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
+
             app.Groups.Modify(0, group);
+            //check groups count
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups[0].Name = group.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData groupIndex in newGroups)
+            {
+                if (groupIndex.Id == oldData.Id)
+                {
+                    Assert.AreEqual(group.Name, groupIndex.Name);
+                }
+            }
         }
 
     }

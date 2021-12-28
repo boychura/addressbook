@@ -67,11 +67,13 @@ namespace addressbook
         public ContactHelper SumbitContactCreating()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;//cache clear
             return this;
         }
         public ContactHelper SumbitContactEditing()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;//cache clear
             return this;
         }
         public ContactHelper SelectContact(int index)
@@ -93,6 +95,7 @@ namespace addressbook
         public ContactHelper AcceptContactRemove()
         {
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;//cache clear
             return this;
         }
         public ContactHelper EditContact(int index)
@@ -101,17 +104,25 @@ namespace addressbook
             return this;
         }
 
+        //cache create
+        private List<UserBio> contactCache = null;
         public List<UserBio> GetContactList()
         {
-            List<UserBio> contacts = new List<UserBio>();
-            manager.Navigator.GoBackToMain();
-            ICollection<IWebElement> elements_name = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement element in elements_name)
+            if (contactCache == null)
             {
-                contacts.Add(new UserBio(element.Text, element.Text));
+                contactCache = new List<UserBio>();
+                manager.Navigator.GoBackToMain();
+                ICollection<IWebElement> elements_name = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements_name)
+                {
+                    contactCache.Add(new UserBio(element.Text));
+                }
             }
-
-            return contacts;
+            return new List<UserBio>(contactCache);//return copy of cashe(original cashe can be changed outside)
+        }
+        internal int GetContactCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count();
         }
     }
 }

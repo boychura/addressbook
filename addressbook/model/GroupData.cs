@@ -8,19 +8,10 @@ namespace addressbook
     //указываем что клас наследует IEquatable,IComparable и его можно сравнивать  с другими объектами GroupData
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
-
-        //объявление полей класса
-        private string name;
-        private string header;
-        private string footer;
-
-
-        //конструктор класса GroupData
         public GroupData(string name)
         {
-            this.name = name;
+            Name = name;
         }
-
 
         //standart method 'Equals'
         //сравнение элементов обьекта GroupData(список груп до создания и список груп после создания)
@@ -36,7 +27,6 @@ namespace addressbook
             }
             return Name == other.Name;
         }
-
 
         //standart method 'GetHashCode'
         //сравнение элементов по хеш коду(если элементы одинаковы значит и хеш код одинаковен)
@@ -61,47 +51,13 @@ namespace addressbook
             return "group name=" + Name;
         }
 
+        //accessors with default body
+        public string Name { get; set; }
 
+        public string Header { get; set; }
 
-        //аксесор для поля именя таблицы
-        public string Name 
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+        public string Footer { get; set; }
 
-
-        //аксесор для поля хедера таблицы
-        public string Header
-        {
-            get 
-            {
-                return header;
-            }
-            set
-            {
-                header = value;
-            }
-        }
-
-
-        //аксесор для поля футера таблицы
-        public string Footer 
-        {
-            get
-            {
-                return footer;
-            }
-            set
-            {
-                footer = value;
-            }
-        }
+        public string Id { get; set; }
     }
 }

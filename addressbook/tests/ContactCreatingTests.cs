@@ -18,6 +18,8 @@ namespace addressbook
 
             app.Contact.CreateContact(user);
             app.Navigator.GoBackToMain();
+            //check contacts count
+            Assert.AreEqual(oldContacts.Count + 1, app.Contact.GetContactCount());
 
             List<UserBio> newContacts = app.Contact.GetContactList();
             oldContacts.Add(user);
