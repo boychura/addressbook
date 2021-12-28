@@ -7,15 +7,20 @@ namespace addressbook
 {
     public class AccountData
     {
+        //объявление полей класса
         private string username;
         private string password;
 
+
+        //конструктор класса AccountData
         public AccountData(string username, string password)
         {
             this.username = username;
             this.password = password;
         }
 
+
+        //аксесор для поля login
         public string Username {
             get 
             {
@@ -27,6 +32,8 @@ namespace addressbook
             } 
         }
 
+
+        //аксесор для поля password
         public string Password
         {
             get

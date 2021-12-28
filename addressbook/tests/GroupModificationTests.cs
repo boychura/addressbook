@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using System.Collections.Generic;//List<>
 
 namespace addressbook
 {
@@ -15,7 +16,16 @@ namespace addressbook
             group.Header = "table_header_modified";
             group.Footer = "table_footer_modified";
 
-            app.Groups.Modify(1, group);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.StartCheckGroups(0, group);
+            app.Groups.Modify(0, group);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = group.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
     }

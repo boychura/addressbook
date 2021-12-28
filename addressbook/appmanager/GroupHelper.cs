@@ -17,7 +17,6 @@ namespace addressbook
 
         public GroupHelper Create(GroupData group)
         {
-            manager.Navigator.GoToGroupPage();
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -27,7 +26,6 @@ namespace addressbook
 
         public GroupHelper Modify(int v, GroupData group)
         {
-            manager.Navigator.GoToGroupPage();
             if (!IsGroupPresent(v))
             {
                 Create(group);
@@ -41,19 +39,23 @@ namespace addressbook
             return this;
         }
 
-        public GroupHelper Remove(int p, GroupData group)
+        public GroupHelper Remove(int p)
         {
-            manager.Navigator.GoToGroupPage();
+            SelectGroup(p);
+            RemoveGroup();
+            ReturnToGroupsPage();
+
+            return this;
+        }
+
+        public GroupHelper StartCheckGroups(int p, GroupData group)
+        {
             if (!IsGroupPresent(p))
             {
                 Create(group);
             }
-            SelectGroup(p);
-            RemoveGroup();
-            ReturnToGroupsPage();
             return this;
         }
-
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -84,13 +86,13 @@ namespace addressbook
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form/span[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("/html/body/div/div[4]/form/span[" + (index + 1) + "]/input")).Click();
             return this;
         }
 
         private bool IsGroupPresent(int index)
         {
-            return IsElementPresent(By.XPath("/html/body/div/div[4]/form/span[" + index + "]/input"));
+            return IsElementPresent(By.XPath("/html/body/div/div[4]/form/span[" + (index + 1) + "]/input"));
         }
 
         public GroupHelper RemoveGroup()
@@ -108,6 +110,20 @@ namespace addressbook
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
+        }
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupPage();
+            //find all elements in 'span.group'(FindElements return <IWebElement> type)
+            //IColection is general list(collection) type in C#
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));//add each element to 'groups' list one by one
+            }
+
+            return groups;
         }
     }
 }

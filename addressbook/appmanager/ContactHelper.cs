@@ -19,15 +19,21 @@ namespace addressbook
             return this;
         }
 
-        public ContactHelper RemoveContact(int v, UserBio user)
+        public ContactHelper RemoveContact(int v)
+        {
+            SelectContact(v);
+            InitContactRemove();
+            AcceptContactRemove();
+
+            return this;
+        }
+
+        public ContactHelper StartCheckContacts(int v, UserBio user)
         {
             if (!IsContactExist(v))
             {
                 CreateContact(user);
             }
-            SelectContact(v);
-            InitContactRemove();
-            AcceptContactRemove();
 
             return this;
         }
@@ -43,10 +49,6 @@ namespace addressbook
 
         public ContactHelper ModifyContact(int v, UserBio user)
         {
-            if (!IsContactExist(v))
-            {
-                CreateContact(user);
-            }
             EditContact(v);
             FillContactForm(user);
             SumbitContactEditing();
@@ -74,13 +76,13 @@ namespace addressbook
         }
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + (index + 1) + "]/input")).Click();
             return this;
         }
 
         private bool IsContactExist(int index)
         {
-            return IsElementPresent(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + index + "]/input"));
+            return IsElementPresent(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + (index + 1) + "]/input"));
         }
         
         public ContactHelper InitContactRemove()
@@ -95,8 +97,21 @@ namespace addressbook
         }
         public ContactHelper EditContact(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[" + (index + 1) + "]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[" + (index + 2) + "]/td[8]/a/img")).Click();
             return this;
+        }
+
+        public List<UserBio> GetContactList()
+        {
+            List<UserBio> contacts = new List<UserBio>();
+            manager.Navigator.GoBackToMain();
+            ICollection<IWebElement> elements_name = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements_name)
+            {
+                contacts.Add(new UserBio(element.Text, element.Text));
+            }
+
+            return contacts;
         }
     }
 }

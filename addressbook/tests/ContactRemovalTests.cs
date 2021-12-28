@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using System.Collections.Generic;//List<>
 
 namespace addressbook
 {
@@ -13,8 +14,15 @@ namespace addressbook
         {
             UserBio user = new UserBio("deleted_name", "deleted_surname");
 
-            app.Contact.RemoveContact(1, user);
+            List<UserBio> oldContacts = app.Contact.GetContactList();
+
+            app.Contact.StartCheckContacts(0, user);
+            app.Contact.RemoveContact(0);
             app.Navigator.GoBackToMain();
+
+            List<UserBio> newContacts = app.Contact.GetContactList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
