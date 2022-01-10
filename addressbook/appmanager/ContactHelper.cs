@@ -112,10 +112,15 @@ namespace addressbook
             {
                 contactCache = new List<UserBio>();
                 manager.Navigator.GoBackToMain();
-                ICollection<IWebElement> elements_name = driver.FindElements(By.Name("entry"));
-                foreach (IWebElement element in elements_name)
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach (IWebElement element in elements)
                 {
-                    contactCache.Add(new UserBio(element.Text));
+                    IWebElement surname = element.FindElement(By.CssSelector("td:nth-child(2)"));
+                    IWebElement name = element.FindElement(By.CssSelector("td:nth-child(3)"));
+                    contactCache.Add(new UserBio(name.Text, surname.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
             return new List<UserBio>(contactCache);//return copy of cashe(original cashe can be changed outside)

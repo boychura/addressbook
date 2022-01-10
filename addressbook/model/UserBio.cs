@@ -49,14 +49,22 @@ namespace addressbook
             {
                 return 1;
             }
-            return Name.CompareTo(other.Name);
+            if (this.Name != other.Name)
+            {
+                return Name.CompareTo(other.Name);
+            }
+            if (this.Surname != other.Surname)
+            {
+                return Surname.CompareTo(other.Surname);
+            }
+            return Surname.CompareTo(other.Surname) & Name.CompareTo(other.Name);
         }
 
 
         //standart method, returns string value UserBio
         public override string ToString()
         {
-            return "name=" + Name + " surname=" + Surname;
+            return $"contact = {Surname} {Name}";
         }
 
 

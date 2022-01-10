@@ -26,10 +26,9 @@ namespace addressbook
 
             List<UserBio> newContacts = app.Contact.GetContactList();
             oldContacts[0].Name = user.Name;
+            oldContacts[0].Surname = user.Surname;
             oldContacts.Sort();
             newContacts.Sort();
-            Console.WriteLine(oldContacts);
-            Console.WriteLine(newContacts);
             Assert.AreEqual(oldContacts, newContacts);
 
             foreach (UserBio userIndex in newContacts)
