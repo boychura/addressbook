@@ -18,6 +18,42 @@ namespace addressbook
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
+        public UserBio GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToMainPage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+
+            return new UserBio(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones
+            };
+        }
+        public UserBio GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigator.GoToMainPage();
+            EditContact(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");//text is in 'value'
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new UserBio(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone
+            };
+        }
 
         public ContactHelper RemoveContact(int v)
         {
@@ -100,7 +136,9 @@ namespace addressbook
         }
         public ContactHelper EditContact(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[" + (index + 2) + "]/td[8]/a/img")).Click();
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
             return this;
         }
 

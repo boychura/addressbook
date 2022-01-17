@@ -8,6 +8,7 @@ namespace addressbook
     //указываем что клас наследует IEquatable,IComparable и его можно сравнивать  с другими объектами UserBio
     public class UserBio : IEquatable<UserBio>, IComparable<UserBio>
     {
+        private string allPhones;
         //конструктор класса UserBio
         public UserBio(string name, string surname)
         {
@@ -71,10 +72,38 @@ namespace addressbook
         //аксесор для поля имени
         public string Name { get; set; }//default accessor
 
-
         //аксесор для поля фамилии
         public string Surname { get; set; }
-
         public string Id { get; set; }
+        public string Address { get; set; }
+        public string HomePhone { get; set; }
+        public string MobilePhone { get; set; }
+        public string WorkPhone { get; set; }
+        public string AllPhones
+        {
+            get {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();//Trim deletes spaces
+                }
+            }
+            set {
+                allPhones = value; 
+            }
+        }
+        //cleaning text of space, (, ), -
+        private string CleanUp(string phone)
+        {
+            if (WorkPhone == null || phone == "")
+            {
+                return "";
+            }
+            return phone.Replace(" ", "").Replace("-", "").Replace(")", "").Replace("(", "") + "\r\n";
+        }
+
     }
 }
