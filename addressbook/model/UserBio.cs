@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace addressbook
 {
@@ -71,8 +72,6 @@ namespace addressbook
 
         //аксесор для поля имени
         public string Name { get; set; }//default accessor
-
-        //аксесор для поля фамилии
         public string Surname { get; set; }
         public string Id { get; set; }
         public string Address { get; set; }
@@ -98,11 +97,11 @@ namespace addressbook
         //cleaning text of space, (, ), -
         private string CleanUp(string phone)
         {
-            if (WorkPhone == null || phone == "")
+            if (phone == null || phone == "")
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace(")", "").Replace("(", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
 
     }

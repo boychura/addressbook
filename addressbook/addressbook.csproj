@@ -77,6 +77,7 @@
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
     <Compile Include="tests\LoginTests.cs" />
+    <Compile Include="tests\SearchTest.cs" />
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="model\UserBio.cs" />
     <Compile Include="model\GroupData.cs" />

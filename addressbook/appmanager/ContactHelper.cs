@@ -5,6 +5,7 @@ using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace addressbook
 {
@@ -166,6 +167,13 @@ namespace addressbook
         internal int GetContactCount()
         {
             return driver.FindElements(By.Name("entry")).Count();
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToMainPage();
+            string text = driver.FindElement(By.Id("search_count")).Text;
+            return Int32.Parse(text);
         }
     }
 }
