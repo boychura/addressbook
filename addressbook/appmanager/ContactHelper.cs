@@ -37,7 +37,7 @@ namespace addressbook
             string workPhone = cells[2].Text;
 
             string email = driver.FindElement(By.Id("content"))
-                .FindElement(By.TagName("a")).GetAttribute("value");
+                .FindElement(By.TagName("a")).Text;
 
             return new UserBio(firstName, lastName)
             {

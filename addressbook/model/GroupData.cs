@@ -48,7 +48,7 @@ namespace addressbook
         //standart method, returns string value GroupData
         public override string ToString()
         {
-            return "group name=" + Name;
+            return "group name=" + Name + "\nheader= " + Header + "\nfooter" + Footer;
         }
 
         //accessors with default body

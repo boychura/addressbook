@@ -9,15 +9,23 @@ namespace addressbook
     [TestFixture]
     public class ContactCreatingTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreatingTK()
+        public static IEnumerable<UserBio> RandomContactDataProvider()
         {
-            UserBio user = new UserBio("ser1", "boy1");
-            user.Address = "Gagarina str";
-            user.HomePhone = "+380(64)2222";
-            user.WorkPhone = "+380(64)1234";
-            user.Email = "123@mail.ru";
+            List<UserBio> user = new List<UserBio>();
+            for (int i = 0; i < 5; i++)
+            {
+                user.Add(new UserBio(GenerateRandomString(30))
+                {
+                    Name = GenerateRandomString(100),
+                    Surname = GenerateRandomString(100)
+                });
+            }
+            return user;
+        }
 
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreatingTK(UserBio user)
+        {
             List<UserBio> oldContacts = app.Contact.GetContactList();
 
             app.Contact.CreateContact(user);
