@@ -13,6 +13,10 @@ namespace addressbook
         public void ContactCreatingTK()
         {
             UserBio user = new UserBio("ser1", "boy1");
+            user.Address = "Gagarina str";
+            user.HomePhone = "+380(64)2222";
+            user.WorkPhone = "+380(64)1234";
+            user.Email = "123@mail.ru";
 
             List<UserBio> oldContacts = app.Contact.GetContactList();
 

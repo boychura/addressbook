@@ -19,6 +19,35 @@ namespace addressbook
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
+
+        public UserBio GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToMainPage();
+            OpenContactDetails(index);
+            string credentials = driver.FindElement(By.Id("content"))
+                .FindElement(By.TagName("b")).Text;
+            string[] subs = credentials.Split(' ');
+            string firstName = subs[0];//text is in 'value'
+            string lastName = subs[1];
+
+            IList<IWebElement> cells = driver.FindElement(By.Id("content"))
+                .FindElements(By.TagName("br"));
+            string address = cells[0].Text;
+            string homePhone = cells[1].Text;
+            string workPhone = cells[2].Text;
+
+            string email = driver.FindElement(By.Id("content"))
+                .FindElement(By.TagName("a")).GetAttribute("value");
+
+            return new UserBio(firstName, lastName)
+            {
+                Address = address,
+                Email = email,
+                HomePhone = homePhone,
+                WorkPhone = workPhone
+            };
+        }
+
         public UserBio GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToMainPage();
@@ -28,11 +57,13 @@ namespace addressbook
             string firstName = cells[2].Text;
             string address = cells[3].Text;
             string allPhones = cells[5].Text;
+            string email = cells[4].Text;
 
             return new UserBio(firstName, lastName)
             {
                 Address = address,
-                AllPhones = allPhones
+                AllPhones = allPhones,
+                Email = email
             };
         }
         public UserBio GetContactInformationFromEditForm(int index)
@@ -46,10 +77,12 @@ namespace addressbook
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
 
             return new UserBio(firstName, lastName)
             {
                 Address = address,
+                Email = email,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
@@ -97,6 +130,11 @@ namespace addressbook
         {
             Type(By.Name("firstname"), user.Name);
             Type(By.Name("lastname"), user.Surname);
+            Type(By.Name("address"), user.Address);
+            Type(By.Name("home"), user.HomePhone);
+            Type(By.Name("mobile"), user.MobilePhone);
+            Type(By.Name("work"), user.WorkPhone);
+            Type(By.Name("email"), user.Email);
 
             return this;
         }
@@ -174,6 +212,14 @@ namespace addressbook
             manager.Navigator.GoToMainPage();
             string text = driver.FindElement(By.Id("search_count")).Text;
             return Int32.Parse(text);
+        }
+
+        public ContactHelper OpenContactDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace addressbook
     public class UserBio : IEquatable<UserBio>, IComparable<UserBio>
     {
         private string allPhones;
+
         //конструктор класса UserBio
         public UserBio(string name, string surname)
         {
@@ -78,6 +79,7 @@ namespace addressbook
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string Email { get; set; }
         public string AllPhones
         {
             get {
@@ -101,7 +103,7 @@ namespace addressbook
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()HW:]", "") + "\r\n";
         }
 
     }
