@@ -109,7 +109,7 @@ namespace addressbook
                 }
                 else
                 {
-                    return (Email + Email2 + Email3).Trim();
+                    return (Email + "\r\n" + Email2 + "\r\n" + Email3 + "\r\n").Trim();
                 }
             }
             set
@@ -124,7 +124,7 @@ namespace addressbook
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()HW:]", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
 
     }

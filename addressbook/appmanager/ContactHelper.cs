@@ -30,11 +30,17 @@ namespace addressbook
             string firstName = subs[0];//text is in 'value'
             string lastName = subs[1];
 
-            IList<IWebElement> cells = driver.FindElement(By.Id("content"))
-                .FindElements(By.TagName("br"));
-            string address = cells[0].Text;
-            string homePhone = cells[1].Text;
-            string workPhone = cells[2].Text;
+
+            char[] dividerMain = { '\r', '\n' };
+            char[] dividerMobile = { 'M', ':', ' ' };
+            char[] dividerWork = { 'W', ':', ' ' };
+
+            string [] allData = driver.FindElement(By.Id("content")).Text.Split(dividerMain);
+
+            string address = allData[2];
+
+            string mobilePhone = allData[6].Trim(dividerMobile);
+            string workPhone = allData[8].Trim(dividerWork);
 
             string email = driver.FindElement(By.Id("content"))
                 .FindElement(By.TagName("a")).Text;
@@ -43,7 +49,7 @@ namespace addressbook
             {
                 Address = address,
                 Email = email,
-                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
                 WorkPhone = workPhone
             };
         }
