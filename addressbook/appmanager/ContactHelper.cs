@@ -57,13 +57,13 @@ namespace addressbook
             string firstName = cells[2].Text;
             string address = cells[3].Text;
             string allPhones = cells[5].Text;
-            string email = cells[4].Text;
+            string allEmails = cells[4].Text;
 
             return new UserBio(firstName, lastName)
             {
                 Address = address,
                 AllPhones = allPhones,
-                Email = email
+                AllEmails = allEmails
             };
         }
         public UserBio GetContactInformationFromEditForm(int index)

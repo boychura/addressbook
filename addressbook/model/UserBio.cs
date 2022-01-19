@@ -10,6 +10,7 @@ namespace addressbook
     public class UserBio : IEquatable<UserBio>, IComparable<UserBio>
     {
         private string allPhones;
+        private string allEmails;
 
         //конструктор класса UserBio
         public UserBio(string name, string surname)
@@ -80,6 +81,8 @@ namespace addressbook
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
         public string Email { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
         public string AllPhones
         {
             get {
@@ -94,6 +97,24 @@ namespace addressbook
             }
             set {
                 allPhones = value; 
+            }
+        }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (Email + Email2 + Email3).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
             }
         }
         //cleaning text of space, (, ), -
