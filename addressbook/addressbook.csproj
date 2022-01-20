@@ -93,6 +93,9 @@
     <Compile Include="tests\GroupRemovalTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="contacts.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="groups.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

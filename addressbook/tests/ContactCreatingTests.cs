@@ -2,7 +2,11 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using System.IO;
 using System.Collections.Generic;//List<>
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace addressbook
 {
@@ -23,7 +27,21 @@ namespace addressbook
             return user;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<UserBio> ContactDataFromXmlFile()
+        {
+            List<UserBio> user = new List<UserBio>();
+            string[] lines = File.ReadAllLines(@"contacts.xml");
+            return (List<UserBio>)new XmlSerializer(typeof(List<UserBio>))
+                .Deserialize(new StreamReader(@"contacts.xml"));
+        }
+
+        public static IEnumerable<UserBio> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<UserBio>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreatingTK(UserBio user)
         {
             List<UserBio> oldContacts = app.Contact.GetContactList();
