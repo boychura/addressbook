@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO;
 using NUnit.Framework;
 using System.Collections.Generic;//List<>
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace addressbook
 {
@@ -23,8 +27,37 @@ namespace addressbook
             return groups;
         }
 
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header= parts[1],
+                    Footer= parts[2]
+                });
+            }
+            return groups;
+        }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.xml");
+            return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>))//first 'List<GroupData>' ykazuvaem iavno vozvrashaemui tip
+                .Deserialize(new StreamReader(@"groups.xml"));
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"groups.json"));
+        }
+
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreateTestCase(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();

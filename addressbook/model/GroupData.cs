@@ -8,6 +8,9 @@ namespace addressbook
     //указываем что клас наследует IEquatable,IComparable и его можно сравнивать  с другими объектами GroupData
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
+        public GroupData()
+        {
+        }
         public GroupData(string name)
         {
             Name = name;

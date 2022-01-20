@@ -13,6 +13,9 @@ namespace addressbook
         private string allEmails;
 
         //конструктор класса UserBio
+        public UserBio()
+        {
+        }
         public UserBio(string name, string surname)
         {
             Name = name;
