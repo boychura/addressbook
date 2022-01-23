@@ -16,9 +16,6 @@ namespace addressbook
             UserBio fromDetail = app.Contact.GetContactInformationFromDetails(0);
 
             Assert.AreEqual(fromForm, fromDetail);
-            Assert.AreEqual(fromForm.Address, fromDetail.Address);
-            Assert.AreEqual(fromForm.Email, fromDetail.Email);
-            Assert.AreEqual(fromForm.AllPhones, fromDetail.AllPhones);
         }
     }
 }

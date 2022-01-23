@@ -24,33 +24,12 @@ namespace addressbook
         {
             manager.Navigator.GoToMainPage();
             OpenContactDetails(index);
-            string credentials = driver.FindElement(By.Id("content"))
-                .FindElement(By.TagName("b")).Text;
-            string[] subs = credentials.Split(' ');
-            string firstName = subs[0];//text is in 'value'
-            string lastName = subs[1];
+            string allData = driver.FindElement(By.Id("content")).Text;
+            allData = Regex.Replace(allData, @"[ -():HWM\n\r]", "");
 
-
-            char[] dividerMain = { '\r', '\n' };
-            char[] dividerMobile = { 'M', ':', ' ' };
-            char[] dividerWork = { 'W', ':', ' ' };
-
-            string [] allData = driver.FindElement(By.Id("content")).Text.Split(dividerMain);
-
-            string address = allData[2];
-
-            string mobilePhone = allData[6].Trim(dividerMobile);
-            string workPhone = allData[8].Trim(dividerWork);
-
-            string email = driver.FindElement(By.Id("content"))
-                .FindElement(By.TagName("a")).Text;
-
-            return new UserBio(firstName, lastName)
+            return new UserBio()
             {
-                Address = address,
-                Email = email,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone
+                AllData = allData
             };
         }
 

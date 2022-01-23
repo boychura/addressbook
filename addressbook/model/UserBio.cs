@@ -102,6 +102,7 @@ namespace addressbook
                 allPhones = value; 
             }
         }
+        public string AllData { get; set; }
         public string AllEmails
         {
             get
