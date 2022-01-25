@@ -51,6 +51,7 @@ namespace addressbook
 
         public GroupHelper StartCheckGroups(int p, GroupData group)
         {
+            manager.Navigator.GoToGroupPage();
             if (!IsGroupPresent(p))
             {
                 Create(group);

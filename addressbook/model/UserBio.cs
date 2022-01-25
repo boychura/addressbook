@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace addressbook
 {
+    [Table(Name = "addressbook")]
     //указываем что клас наследует IEquatable,IComparable и его можно сравнивать  с другими объектами UserBio
     public class UserBio : IEquatable<UserBio>, IComparable<UserBio>
     {
@@ -74,18 +76,6 @@ namespace addressbook
             return $"contact = {Surname} {Name}";
         }
 
-
-        //аксесор для поля имени
-        public string Name { get; set; }//default accessor
-        public string Surname { get; set; }
-        public string Id { get; set; }
-        public string Address { get; set; }
-        public string HomePhone { get; set; }
-        public string MobilePhone { get; set; }
-        public string WorkPhone { get; set; }
-        public string Email { get; set; }
-        public string Email2 { get; set; }
-        public string Email3 { get; set; }
         public string AllPhones
         {
             get {
@@ -113,7 +103,7 @@ namespace addressbook
                 }
                 else
                 {
-                    return (Email + "\r\n" + Email2 + "\r\n" + Email3 + "\r\n").Trim();
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
                 }
             }
             set
@@ -130,6 +120,45 @@ namespace addressbook
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
+
+        [Column(Name = "firstname")]
+        public string Name { get; set; }
+
+
+        [Column(Name = "lastname")]
+        public string Surname { get; set; }
+
+
+        [Column(Name = "id"), PrimaryKey, Identity]
+        public string Id { get; set; }
+
+
+        [Column(Name = "address")]
+        public string Address { get; set; }
+
+
+        [Column(Name = "home")]
+        public string HomePhone { get; set; }
+
+
+        [Column(Name = "mobile")]
+        public string MobilePhone { get; set; }
+
+
+        [Column(Name = "work")]
+        public string WorkPhone { get; set; }
+
+
+        [Column(Name = "email")]
+        public string Email { get; set; }
+
+
+        [Column(Name = "email2")]
+        public string Email2 { get; set; }
+
+
+        [Column(Name = "email3")]
+        public string Email3 { get; set; }
 
     }
 }

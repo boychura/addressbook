@@ -20,7 +20,7 @@ namespace addressbook
 
             //создание списка олдГрупс(существующих) на основе класа ГрупДата и присваивание этому списку елементов
             //полученых методом ГетГрупЛист 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];//saving 1-st element in list before changes
 
             app.Groups.Remove(0);
@@ -29,7 +29,7 @@ namespace addressbook
 
             //создание списка newGroups(после удаления) на основе класа ГрупДата и присваивание этому списку елементов
             //полученых методом ГетГрупЛист 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups.RemoveAt(0);//удаление элемента с первого списка груп(так как он удален тестом)
             Assert.AreEqual(oldGroups, newGroups);//сравнение двух списков груп, до и после удаления
