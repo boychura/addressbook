@@ -17,6 +17,7 @@ namespace addressbook
 
         public GroupHelper Create(GroupData group)
         {
+            manager.Navigator.GoToGroupPage();
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -39,10 +40,35 @@ namespace addressbook
             return this;
         }
 
+        public GroupHelper Modify(GroupData groupData, GroupData group)
+        {
+            if (!IsGroupPresent(groupData.Id))
+            {
+                Create(group);
+            }
+            SelectGroup(groupData.Id);
+            InitGroupModification();
+            FillGroupForm(group);
+            SubmitGroupMofifcation();
+            manager.Navigator.GoToGroupPage();
+
+            return this;
+        }
 
         public GroupHelper Remove(int p)
         {
+            manager.Navigator.GoToGroupPage();
             SelectGroup(p);
+            RemoveGroup();
+            ReturnToGroupsPage();
+
+            return this;
+        }
+
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(group.Id);
             RemoveGroup();
             ReturnToGroupsPage();
 
@@ -89,13 +115,23 @@ namespace addressbook
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form/span[" + (index + 1) + "]/input")).Click();
+            driver.FindElement(By.XPath("//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+        public GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value=" + id + "]")).Click();
             return this;
         }
 
         private bool IsGroupPresent(int index)
         {
             return IsElementPresent(By.XPath("/html/body/div/div[4]/form/span[" + (index + 1) + "]/input"));
+        }
+
+        private bool IsGroupPresent(string id)
+        {
+            return IsElementPresent(By.XPath("//input[@name='selected[]' and @value=" + id + "]"));
         }
 
         public GroupHelper RemoveGroup()

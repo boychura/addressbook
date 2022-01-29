@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 namespace addressbook
 {
     [TestFixture]
-    public class ContactCreatingTests : AuthTestBase
+    public class ContactCreatingTests : ContactTestBase
     {
         public static IEnumerable<UserBio> RandomContactDataProvider()
         {
@@ -44,14 +44,14 @@ namespace addressbook
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreatingTK(UserBio user)
         {
-            List<UserBio> oldContacts = app.Contact.GetContactList();
+            List<UserBio> oldContacts = UserBio.GetAll();
 
             app.Contact.CreateContact(user);
             app.Navigator.GoBackToMain();
             //check contacts count
             Assert.AreEqual(oldContacts.Count + 1, app.Contact.GetContactCount());
 
-            List<UserBio> newContacts = app.Contact.GetContactList();
+            List<UserBio> newContacts = UserBio.GetAll();
             oldContacts.Add(user);
             oldContacts.Sort();
             newContacts.Sort();

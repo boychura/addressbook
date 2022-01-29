@@ -160,5 +160,16 @@ namespace addressbook
         [Column(Name = "email3")]
         public string Email3 { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
+        public static List<UserBio> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contact.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
+            }
+        }
+
     }
 }

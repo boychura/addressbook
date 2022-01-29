@@ -125,6 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\AddressBookDB.cs" />
+    <Compile Include="model\GroupContactRelation.cs" />
+    <Compile Include="tests\AddingContactToGroup.cs" />
     <Compile Include="tests\ContactDetailCheck.cs" />
     <Compile Include="tests\ContactInformationTests.cs" />
     <Compile Include="tests\ContactModificationTests.cs" />
@@ -137,6 +139,8 @@
     <Compile Include="appmanager\GroupHelper.cs" />
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
+    <Compile Include="tests\ContactTestBase.cs" />
+    <Compile Include="tests\GroupTestBase.cs" />
     <Compile Include="tests\LoginTests.cs" />
     <Compile Include="tests\SearchTest.cs" />
     <Compile Include="tests\TestBase.cs" />

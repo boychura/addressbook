@@ -7,7 +7,7 @@ using System.Collections.Generic;//List<>
 namespace addressbook
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
         [Test]
         public void GroupRemovalTestCase()
@@ -18,21 +18,17 @@ namespace addressbook
 
             app.Groups.StartCheckGroups(0, group);
 
-            //создание списка олдГрупс(существующих) на основе класа ГрупДата и присваивание этому списку елементов
-            //полученых методом ГетГрупЛист 
             List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];//saving 1-st element in list before changes
 
-            app.Groups.Remove(0);
+            app.Groups.Remove(oldData);
             //check groups count
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
-            //создание списка newGroups(после удаления) на основе класа ГрупДата и присваивание этому списку елементов
-            //полученых методом ГетГрупЛист 
             List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups.RemoveAt(0);//удаление элемента с первого списка груп(так как он удален тестом)
-            Assert.AreEqual(oldGroups, newGroups);//сравнение двух списков груп, до и после удаления
+            Assert.AreEqual(oldGroups, newGroups);
 
             foreach (GroupData groupIndex in newGroups)
             {

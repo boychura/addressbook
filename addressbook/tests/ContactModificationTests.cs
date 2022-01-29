@@ -7,7 +7,7 @@ using System.Collections.Generic;//List<>
 namespace addressbook
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTestCase()
@@ -16,15 +16,15 @@ namespace addressbook
 
             app.Contact.StartCheckContacts(0, user);
 
-            List<UserBio> oldContacts = app.Contact.GetContactList();
+            List<UserBio> oldContacts = UserBio.GetAll();
             UserBio oldData = oldContacts[0];
 
-            app.Contact.ModifyContact(0, user);
+            app.Contact.ModifyContact(oldData, user);
             app.Navigator.GoBackToMain();
             //check contacts count
             Assert.AreEqual(oldContacts.Count, app.Contact.GetContactCount());
 
-            List<UserBio> newContacts = app.Contact.GetContactList();
+            List<UserBio> newContacts = UserBio.GetAll();
             oldContacts[0].Name = user.Name;
             oldContacts[0].Surname = user.Surname;
             oldContacts.Sort();

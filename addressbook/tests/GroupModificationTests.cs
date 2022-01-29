@@ -7,7 +7,7 @@ using System.Collections.Generic;//List<>
 namespace addressbook
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTestCase()
@@ -18,14 +18,14 @@ namespace addressbook
 
             app.Groups.StartCheckGroups(0, group);
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
 
-            app.Groups.Modify(0, group);
+            app.Groups.Modify(oldData, group);
             //check groups count
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups[0].Name = group.Name;
             oldGroups.Sort();
             newGroups.Sort();

@@ -7,12 +7,12 @@ using System.Collections.Generic;//List<>
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using System.Linq;
+using System.Linq;//Linq language
 
 namespace addressbook
 {
     [TestFixture]
-    public class GroupCreatingTests : AuthTestBase
+    public class GroupCreatingTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -45,13 +45,13 @@ namespace addressbook
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreateTestCase(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
             //check groups count
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);//add created group to old group to compare 
             oldGroups.Sort();
             newGroups.Sort();
@@ -81,15 +81,10 @@ namespace addressbook
         [Test]
         public void TestDBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            List<GroupData> fromUi = app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            List<GroupData> fromDb = GroupData.GetAll();
-            end = DateTime.Now;
-            System.Console.WriteLine(end.Subtract(start));
+            foreach (UserBio contact in GroupData.GetAll()[0].GetUserBios())
+            {
+                Console.WriteLine(contact);
+            }
         }
     }
 }

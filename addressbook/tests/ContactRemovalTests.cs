@@ -16,15 +16,15 @@ namespace addressbook
 
             app.Contact.StartCheckContacts(0, user);
 
-            List<UserBio> oldContacts = app.Contact.GetContactList();
+            List<UserBio> oldContacts = UserBio.GetAll();
             UserBio oldData = oldContacts[0];
 
-            app.Contact.RemoveContact(0);
+            app.Contact.RemoveContact(oldData);
             app.Navigator.GoBackToMain();
             //check contacts count
             Assert.AreEqual(oldContacts.Count - 1, app.Contact.GetContactCount());
 
-            List<UserBio> newContacts = app.Contact.GetContactList();
+            List<UserBio> newContacts = UserBio.GetAll();
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
 

@@ -24,14 +24,15 @@ namespace addressbook
         {
             manager.Navigator.GoToMainPage();
             OpenContactDetails(index);
+
             string allData = driver.FindElement(By.Id("content")).Text;
-            allData = Regex.Replace(allData, @"[ -():HWM\n\r]", "");
 
             return new UserBio()
             {
                 AllData = allData
             };
         }
+
 
         public UserBio GetContactInformationFromTable(int index)
         {
@@ -86,6 +87,15 @@ namespace addressbook
 
             return this;
         }
+        public ContactHelper RemoveContact(UserBio user)
+        {
+            SelectContact(user.Id);
+            InitContactRemove();
+            AcceptContactRemove();
+
+            return this;
+        }
+
 
         public ContactHelper StartCheckContacts(int v, UserBio user)
         {
@@ -114,6 +124,15 @@ namespace addressbook
 
             return this;
         }
+        public ContactHelper ModifyContact(UserBio userBio, UserBio user)
+        {
+            EditContact(userBio.Id);
+            FillContactForm(user);
+            SumbitContactEditing();
+
+            return this;
+        }
+
 
         public ContactHelper FillContactForm(UserBio user)
         {
@@ -140,10 +159,13 @@ namespace addressbook
             contactCache = null;//cache clear
             return this;
         }
-        public ContactHelper SelectContact(int index)
+        public void SelectContact(int index)
         {
-            driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + (index + 1) + "]/input")).Click();
-            return this;
+            driver.FindElement(By.XPath("//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+        }
+        private void SelectContact(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
         }
 
         private bool IsContactExist(int index)
@@ -167,6 +189,12 @@ namespace addressbook
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+        public ContactHelper EditContact(string id)
+        {
+            driver.FindElement(By.XPath("//tr[./td[./input[@name='selected[]' and @value='" + id + "']]]"))
+                .FindElement(By.XPath(".//img[@alt='Edit']")).Click();
             return this;
         }
 
@@ -209,6 +237,31 @@ namespace addressbook
                 .FindElements(By.TagName("td"))[6]
                 .FindElement(By.TagName("a")).Click();
             return this;
+        }
+        public void AddContactToGroup(UserBio contact, GroupData group)
+        {
+            manager.Navigator.GoToMainPage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)) //waiting until message appeared
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
         }
     }
 }

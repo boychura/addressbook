@@ -7,7 +7,7 @@ using System.Collections.Generic;//List<>
 namespace addressbook
 {
     [TestFixture]
-    public class ContactInformationTests : AuthTestBase
+    public class ContactInformationTests : ContactTestBase
     {
         [Test]
         public void ContactInformationTK()
@@ -16,9 +16,6 @@ namespace addressbook
             UserBio fromForm = app.Contact.GetContactInformationFromEditForm(0);
 
             Assert.AreEqual(fromTable, fromForm);
-            Assert.AreEqual(fromTable.Address, fromForm.Address);
-            Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
-            Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
         }
     }
 }

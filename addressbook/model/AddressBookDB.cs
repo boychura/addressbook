@@ -13,5 +13,6 @@ namespace addressbook
 
         public ITable<GroupData> Groups { get { return GetTable<GroupData>(); } }
         public ITable<UserBio> Contact { get { return GetTable<UserBio>(); } }
+        public ITable<GroupContactRelation> GCR { get { return GetTable<GroupContactRelation>(); } }
     }
 }
