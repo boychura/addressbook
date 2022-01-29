@@ -20,6 +20,7 @@ namespace addressbook
             return this;
         }
 
+
         public UserBio GetContactInformationFromDetails(int index)
         {
             manager.Navigator.GoToMainPage();
@@ -262,6 +263,28 @@ namespace addressbook
         public void CommitAddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
+        }
+
+
+
+        public void RemoveContactFromGroup(UserBio contact, GroupData group)
+        {
+            manager.Navigator.GoToMainPage();
+            SelectGroupToRemove(group.Id);
+            SelectContact(contact.Id);
+            CommitDeletingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void SelectGroupToRemove(string groupdId)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByValue(groupdId);
+        }
+
+        private void CommitDeletingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
         }
     }
 }

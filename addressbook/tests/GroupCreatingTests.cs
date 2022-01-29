@@ -83,7 +83,7 @@ namespace addressbook
         {
             foreach (UserBio contact in GroupData.GetAll()[0].GetUserBios())
             {
-                Console.WriteLine(contact);
+                Console.WriteLine(contact.Deprecated);
             }
         }
     }

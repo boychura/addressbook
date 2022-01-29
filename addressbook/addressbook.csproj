@@ -140,6 +140,7 @@
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
     <Compile Include="tests\ContactTestBase.cs" />
+    <Compile Include="tests\DeletingContactFromGroup.cs" />
     <Compile Include="tests\GroupTestBase.cs" />
     <Compile Include="tests\LoginTests.cs" />
     <Compile Include="tests\SearchTest.cs" />

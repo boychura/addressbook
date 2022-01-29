@@ -129,7 +129,7 @@ namespace addressbook
         public string Surname { get; set; }
 
 
-        [Column(Name = "id"), PrimaryKey, Identity]
+        [Column(Name = "id"), PrimaryKey]
         public string Id { get; set; }
 
 

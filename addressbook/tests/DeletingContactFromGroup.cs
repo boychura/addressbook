@@ -7,22 +7,22 @@ using NUnit.Framework;
 
 namespace addressbook
 {
-    public class AddingContactToGroup : AuthTestBase
+    public class DeletingContactFromGroup : AuthTestBase
     {
         [Test]
-        public void TestAddingContactToGroup()
+        public void TestDeletingContactToGroup()
         {
             GroupData group = GroupData.GetAll()[0];
             List<UserBio> oldList = group.GetUserBios();
 
 
-            UserBio contact = UserBio.GetAll().Except(oldList).First();
+            UserBio contact = oldList.First();
 
-            app.Contact.AddContactToGroup(contact, group);
+            app.Contact.RemoveContactFromGroup(contact, group);
 
             //actions
             List<UserBio> newList = group.GetUserBios();
-            oldList.Add(contact);
+            oldList.Remove(contact);
             oldList.Sort();
             newList.Sort();
 
