@@ -9,7 +9,7 @@ namespace addressbook
 {
     public class ContactTestBase : AuthTestBase
     {
-        [TearDown]
+        [OneTimeTearDown]
         public void CompareContactsUI_DB()
         {
             if (PERFORM_LONG_UI_CHECKS)

@@ -9,7 +9,7 @@ namespace addressbook
 {
     public class AuthTestBase : TestBase
     {
-        [SetUp]
+        [OneTimeSetUp]
         public void SetupLogin()
         {
             app.Auth.Login(new AccountData("admin", "secret"));

@@ -9,7 +9,7 @@ namespace addressbook
 {
     public class GroupTestBase : AuthTestBase
     {
-        [TearDown]
+        [OneTimeTearDown]
         public void CompareGroupsUI_DB()
         {
             if (PERFORM_LONG_UI_CHECKS)

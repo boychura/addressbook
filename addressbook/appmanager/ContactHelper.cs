@@ -20,7 +20,6 @@ namespace addressbook
             return this;
         }
 
-
         public UserBio GetContactInformationFromDetails(int index)
         {
             manager.Navigator.GoToMainPage();
@@ -107,6 +106,15 @@ namespace addressbook
 
             return this;
         }
+        public ContactHelper StartCheckContacts(UserBio user)
+        {
+            if (!IsContactExist(user.Id))
+            {
+                CreateContact(user);
+            }
+
+            return this;
+        }
 
         public ContactHelper CreateContact(UserBio user)
         {
@@ -173,7 +181,11 @@ namespace addressbook
         {
             return IsElementPresent(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + (index + 1) + "]/input"));
         }
-        
+        private bool IsContactExist(string userId)
+        {
+            return IsElementPresent(By.XPath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[" + (userId + 1) + "]/input"));
+        }
+
         public ContactHelper InitContactRemove()
         {
             driver.FindElement(By.XPath("/html/body/div/div[4]/form[2]/div[2]/input")).Click();
@@ -242,6 +254,7 @@ namespace addressbook
         public void AddContactToGroup(UserBio contact, GroupData group)
         {
             manager.Navigator.GoToMainPage();
+            StartCheckContacts(contact);
             ClearGroupFilter();
             SelectContact(contact.Id);
             SelectGroupToAdd(group.Name);
@@ -264,8 +277,6 @@ namespace addressbook
         {
             driver.FindElement(By.Name("add")).Click();
         }
-
-
 
         public void RemoveContactFromGroup(UserBio contact, GroupData group)
         {

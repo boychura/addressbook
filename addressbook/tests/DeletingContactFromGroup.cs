@@ -13,10 +13,24 @@ namespace addressbook
         public void TestDeletingContactToGroup()
         {
             GroupData group = GroupData.GetAll()[0];
+            if (group == null)
+            {
+                group.Header = "group_name";
+                group.Name = "group_name";
+                app.Groups.Create(group);
+            }
+
             List<UserBio> oldList = group.GetUserBios();
 
 
             UserBio contact = oldList.First();
+            if (contact == null)
+            {
+                contact.Name = "serghiy";
+                contact.Surname = "boychura";
+                app.Contact.CreateContact(contact);
+                app.Contact.AddContactToGroup(contact, group);
+            }
 
             app.Contact.RemoveContactFromGroup(contact, group);
 
