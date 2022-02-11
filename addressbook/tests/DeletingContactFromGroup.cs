@@ -12,31 +12,32 @@ namespace addressbook
         [Test]
         public void TestDeletingContactToGroup()
         {
-            GroupData group = GroupData.GetAll()[0];
-            if (group == null)
+            List<GroupData> groups = GroupData.GetAll();
+            if (groups.Count == 0)
             {
-                group.Header = "group_name";
-                group.Name = "group_name";
+                GroupData newgroup = new GroupData("newgroup");
                 app.Groups.Create(group);
             }
+            GroupData group = GroupData.GetAll()[0];
 
-            List<UserBio> oldList = group.GetUserBios();
+            List<UserBio> oldList = UserBio.GetAll();
 
-
-            UserBio contact = oldList.First();
-            if (contact == null)
+            UserBio firstcontact = UserBio.GetAll().Intersect(group.GetUserBios()).FirstOrDefault();
+            if (firstcontact == null)
             {
-                contact.Name = "serghiy";
-                contact.Surname = "boychura";
-                app.Contact.CreateContact(contact);
-                app.Contact.AddContactToGroup(contact, group);
+                UserBio newcontact = new UserBio("firstname_test", "lastname_test" );
+                app.Contact.CreateContact(newcontact);
+                oldList.Add(newcontact);
+
+                app.Contact.CreateContact(newcontact);
+                app.Contact.AddContactToGroup(newcontact, group);
             }
+            UserBio contact = UserBio.GetAll().Intersect(group.GetUserBios()).First();
 
             app.Contact.RemoveContactFromGroup(contact, group);
 
             //actions
             List<UserBio> newList = group.GetUserBios();
-            oldList.Remove(contact);
             oldList.Sort();
             newList.Sort();
 

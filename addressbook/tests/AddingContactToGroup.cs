@@ -12,29 +12,30 @@ namespace addressbook
         [Test]
         public void TestAddingContactToGroup()
         {
-            GroupData group = GroupData.GetAll()[0];
-            if (group == null) 
+            List<GroupData> groups = GroupData.GetAll();
+            if (groups.Count == 0) 
             {
-                group.Header = "group_name";
-                group.Name = "group_name";
+                GroupData newGroup = new GroupData("newgroup");
                 app.Groups.Create(group);
             }
+            GroupData group = GroupData.GetAll()[0];
 
             List<UserBio> oldList = group.GetUserBios();
 
-            UserBio contact = UserBio.GetAll().Except(oldList).First();
+            
+            UserBio firstcontact = oldList.Except(group.GetUserBios()).FirstOrDefault();
             if (contact == null)
             {
-                contact.Name = "serghiy";
-                contact.Surname = "boychura";
+                UserBio newcontact = new UserBio("test_name", "test_surname");
                 app.Contact.CreateContact(contact);
+                oldList.Add(contact);
             }
+            UserBio contact = UserBio.GetAll().Except(oldList).First();
 
             app.Contact.AddContactToGroup(contact, group);
 
             //actions
             List<UserBio> newList = group.GetUserBios();
-            oldList.Add(contact);
             oldList.Sort();
             newList.Sort();
 
