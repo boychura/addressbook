@@ -162,6 +162,7 @@ namespace addressbook
 
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
+        public string ConcatAll { get; internal set; }
 
         public static List<UserBio> GetAll()
         {

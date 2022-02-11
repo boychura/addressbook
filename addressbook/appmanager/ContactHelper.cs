@@ -20,19 +20,19 @@ namespace addressbook
             return this;
         }
 
-        public UserBio GetContactInformationFromDetails(int index)
+        public string GetContactInformationFromDetails(int index)
         {
             manager.Navigator.GoToMainPage();
             OpenContactDetails(index);
 
-            string allData = driver.FindElement(By.Id("content")).Text;
-
-            return new UserBio()
-            {
-                AllData = allData
-            };
+            return GetAllDetailInformation();
         }
 
+        private string GetAllDetailInformation()
+        {
+            string allData = driver.FindElement(By.Id("content")).Text;
+            return allData;
+        }
 
         public UserBio GetContactInformationFromTable(int index)
         {
