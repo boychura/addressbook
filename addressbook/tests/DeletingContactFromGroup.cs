@@ -16,7 +16,7 @@ namespace addressbook
             if (groups.Count == 0)
             {
                 GroupData newgroup = new GroupData("newgroup");
-                app.Groups.Create(group);
+                app.Groups.Create(newgroup);
             }
             GroupData group = GroupData.GetAll()[0];
 

@@ -16,7 +16,7 @@ namespace addressbook
             if (groups.Count == 0) 
             {
                 GroupData newGroup = new GroupData("newgroup");
-                app.Groups.Create(group);
+                app.Groups.Create(newGroup);
             }
             GroupData group = GroupData.GetAll()[0];
 
@@ -24,11 +24,11 @@ namespace addressbook
 
             
             UserBio firstcontact = oldList.Except(group.GetUserBios()).FirstOrDefault();
-            if (contact == null)
+            if (firstcontact == null)
             {
                 UserBio newcontact = new UserBio("test_name", "test_surname");
-                app.Contact.CreateContact(contact);
-                oldList.Add(contact);
+                app.Contact.CreateContact(newcontact);
+                oldList.Add(newcontact);
             }
             UserBio contact = UserBio.GetAll().Except(oldList).First();
 
