@@ -12,30 +12,41 @@ namespace addressbook
         [Test]
         public void TestAddingContactToGroup()
         {
-            List<GroupData> groups = GroupData.GetAll();
-            if (groups.Count == 0) 
-            {
-                GroupData newGroup = new GroupData("newgroup");
-                app.Groups.Create(newGroup);
-            }
-            GroupData group = GroupData.GetAll()[0];
+            List<GroupData> groupList = GroupData.GetAll();
+            List<UserBio> contactList = UserBio.GetAll();
+            GroupData newGroup = new GroupData("newgroup");
+            UserBio newcontact = new UserBio("test_name", "test_surname");
 
+            if (groupList.Count == 0) 
+            {
+                app.Groups.Create(newGroup);
+
+                if (contactList.Count == 0)
+                {
+                    app.Contact.CreateContact(newcontact);
+                }
+            }
+            if (contactList.Count == 0)
+            {
+                app.Contact.CreateContact(newcontact);
+            }
+
+            GroupData group = GroupData.GetAll()[0];
             List<UserBio> oldList = group.GetUserBios();
 
-            
-            UserBio firstcontact = oldList.Except(group.GetUserBios()).FirstOrDefault();
-            if (firstcontact == null)
-            {
-                UserBio newcontact = new UserBio("test_name", "test_surname");
-                app.Contact.CreateContact(newcontact);
-                oldList.Add(newcontact);
-            }
-            UserBio contact = UserBio.GetAll().Except(oldList).First();
 
-            app.Contact.AddContactToGroup(contact, group);
+            if (oldList.SequenceEqual(UserBio.GetAll()))
+            {
+                app.Contact.CreateContact(newcontact);
+            }
+
+
+            UserBio contacts = UserBio.GetAll().Except(oldList).First();
+            app.Contact.AddContactToGroup(contacts, group);
 
             //actions
             List<UserBio> newList = group.GetUserBios();
+            oldList.Add(contacts);
             oldList.Sort();
             newList.Sort();
 

@@ -255,6 +255,7 @@ namespace addressbook
         {
             manager.Navigator.GoToMainPage();
             StartCheckContacts(contact);
+            manager.Navigator.GoToMainPage();
             ClearGroupFilter();
             SelectContact(contact.Id);
             SelectGroupToAdd(group.Name);
