@@ -12,11 +12,10 @@ namespace addressbook
         [Test]
         public void ContactDetailCheckTK()
         {
-            UserBio fromForm = app.Contact.GetContactInformationFromEditForm(0);
-            string fromDetail = app.Contact.GetContactInformationFromDetails(0);
-            string fromFormconcat = fromForm.ConcatAll;
+            UserBio fromForm = app.Contact.GetContactInformationFromEditForm(7);
+            string fromDetail = app.Contact.GetContactInformationFromDetails(7);
 
-            Assert.AreEqual(fromDetail, fromFormconcat);
+            Assert.AreEqual(fromDetail, fromForm.ConcatAll);
         }
     }
 }

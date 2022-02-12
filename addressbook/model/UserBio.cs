@@ -13,6 +13,11 @@ namespace addressbook
     {
         private string allPhones;
         private string allEmails;
+        private string concatAll;
+        private string fullNameConcatk;
+        private string addressConcat;
+        private string phonesConcat;
+        private string emailConcat;
 
         //конструктор класса UserBio
         public UserBio()
@@ -92,7 +97,6 @@ namespace addressbook
                 allPhones = value; 
             }
         }
-        public string AllData { get; set; }
         public string AllEmails
         {
             get
@@ -162,7 +166,6 @@ namespace addressbook
 
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
-        public string ConcatAll { get; internal set; }
 
         public static List<UserBio> GetAll()
         {
@@ -171,6 +174,251 @@ namespace addressbook
                 return (from c in db.Contact.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             }
         }
+        public string ConcatAll
+        {
+            get
+            {
+                string fullNameConcat = FullNameConcat;
+                string addressConcat = AddressConcat;
+                string phoneConcat = PhoneConcat;
+                string emailConcat = EmailConcat;
+                string concatAllBuffer = "";
 
+
+
+                if (concatAll != null)
+                {
+                    return concatAll = "";
+                }
+                else
+                {
+                    if (fullNameConcat != "")
+                    {
+                        concatAllBuffer = fullNameConcat;
+                    }
+                    if (addressConcat != "")
+                    {
+                        if (concatAllBuffer != "")
+                        {
+                            concatAllBuffer += ReturnTextWithEnterBeforeText(addressConcat);
+                        }
+                        else
+                        {
+                            concatAllBuffer = addressConcat;
+                        }
+                    }
+                    if (phoneConcat != "")
+                    {
+                        if (concatAllBuffer != "")
+                        {
+                            concatAllBuffer += ReturnTextWithTwoEnters(phoneConcat);
+                        }
+                        else
+                        {
+                            concatAllBuffer = phoneConcat;
+                        }
+                    }
+                    if (emailConcat != "")
+                    {
+                        if (concatAllBuffer != "")
+                        {
+                            concatAllBuffer += ReturnTextWithTwoEnters(emailConcat);
+                        }
+                        else
+                        {
+                            concatAllBuffer = emailConcat;
+                        }
+                    }
+                }
+                return concatAllBuffer.Trim();
+            }
+            set
+            {
+                concatAll = value;
+            }
+        }
+
+
+        public string FullNameConcat
+        {
+            get
+            {
+                if (fullNameConcatk != null)
+                {
+                    return fullNameConcatk;
+                }
+                else
+                {
+
+                    return ReturnFullName(Name.Trim(), Surname.Trim());
+                }
+            }
+            set
+            {
+                fullNameConcatk = value;
+            }
+        }
+
+        public string PhoneConcat
+        {
+            get
+            {
+                string phoneConcat = "";
+
+                if (HomePhone != null && HomePhone != "")
+                {
+                    phoneConcat = ("H: " + HomePhone.Trim()).Trim();
+                }
+                if (MobilePhone != null && MobilePhone != "")
+                {
+                    if (phoneConcat != null && phoneConcat != "")
+                    {
+                        phoneConcat += "\r\n" + ("M: " + MobilePhone.Trim()).Trim();
+                    }
+                    else
+                    {
+                        phoneConcat = ("M: " + MobilePhone.Trim()).Trim();
+                    }
+                }
+                if (WorkPhone != null && WorkPhone != "")
+                {
+                    if (phoneConcat != null && phoneConcat != "")
+                    {
+                        phoneConcat += "\r\n" + ("W: " + WorkPhone.Trim()).Trim();
+                    }
+                    else
+                    {
+                        phoneConcat = ("W: " + WorkPhone.Trim()).Trim();
+                    }
+                }
+                return phoneConcat;
+            }
+            set
+            {
+                phonesConcat = value;
+            }
+        }
+
+        public string EmailConcat
+        {
+            get
+            {
+                string emailConcat = "";
+
+                if (Email != null && Email != "")
+                {
+                    emailConcat = Email;
+                }
+                if (Email2 != null && Email2 != "")
+                {
+                    if (emailConcat != null && emailConcat != "")
+                    {
+                        emailConcat = emailConcat.Trim() + "\r\n" + Email2.Trim();
+                    }
+                    else
+                    {
+                        emailConcat = Email2;
+                    }
+                }
+                if (Email3 != null && Email3 != "")
+                {
+                    if (emailConcat != null && emailConcat != "")
+                    {
+                        emailConcat = emailConcat + "\r\n" + Email3.Trim();
+                    }
+                    else
+                    {
+                        emailConcat = Email3;
+                    }
+                }
+                return emailConcat;
+            }
+            set
+            {
+                emailConcat = value;
+            }
+        }
+
+        public string AddressConcat
+        {
+            get
+            {
+                string addressConcat = "";
+                if (Address != null && Address != "")
+                {
+                    if (addressConcat != null && addressConcat != "")
+                    {
+                        addressConcat += "\r\n" + Address.Trim();
+                    }
+                    else
+                    {
+                        addressConcat = Address.Trim();
+                    }
+                }
+                return addressConcat;
+            }
+            set
+            {
+                addressConcat = value;
+            }
+        }
+
+        public string ReturnTextWithEnter(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            return text + "\r\n";
+        }
+
+        public string ReturnTextWithoutEnter(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            return text;
+        }
+
+        public string ReturnTextWithEnterBeforeText(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            return "\r\n" + text;
+        }
+
+        public string ReturnTextWithTwoEnters(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            return "\r\n\r\n" + text;
+        }
+
+        public string ReturnFullName(string name, string surname)
+        {
+            string FullName = "";
+            if (name != null && name != "")
+            {
+                FullName = name;
+            }
+            if (surname != null && surname != "")
+            {
+                if (FullName != "")
+                {
+                    FullName += " " + surname;
+                }
+                else
+                {
+                    FullName = surname;
+                }
+            }
+
+            return FullName;
+        }
     }
 }
