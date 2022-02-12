@@ -254,8 +254,6 @@ namespace addressbook
         public void AddContactToGroup(UserBio contact, GroupData group)
         {
             manager.Navigator.GoToMainPage();
-            StartCheckContacts(contact);
-            manager.Navigator.GoToMainPage();
             ClearGroupFilter();
             SelectContact(contact.Id);
             SelectGroupToAdd(group.Name);
